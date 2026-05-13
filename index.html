@@ -369,52 +369,6 @@
       border-bottom: 1px solid var(--border);
     }
 
-    /* ── Countdown ── */
-    .countdown-wrap {
-      background: linear-gradient(135deg, var(--purple-dark), var(--purple));
-      color: var(--white);
-      padding: 16px 20px;
-      margin-bottom: 26px;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      position: relative;
-      overflow: hidden;
-    }
-    .countdown-wrap::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.04) 50%, transparent 60%);
-      animation: countdownShine 4s ease-in-out infinite;
-    }
-    @keyframes countdownShine {
-      0% { transform: translateX(-100%) rotate(0); }
-      100% { transform: translateX(100%) rotate(0); }
-    }
-    .countdown-wrap .cd-label {
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
-      white-space: nowrap;
-    }
-    .countdown-wrap .cd-timer {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--gold);
-      letter-spacing: 2px;
-      flex: 1;
-      text-align: right;
-      animation: timerPulse 1s ease-in-out infinite;
-    }
-    @keyframes timerPulse {
-      0%, 100% { opacity: 1; }
       50% { opacity: 0.8; }
     }
 
@@ -691,10 +645,6 @@
     <div class="card-title">Fee Voucher Registration</div>
     <div class="card-subtitle">A-Levels Special Discount Offer</div>
 
-    <div class="countdown-wrap">
-      <span class="cd-label">Registration closes in</span>
-      <span class="cd-timer" id="countdown">--:--:--</span>
-    </div>
 
     <div class="field">
       <label>Student Full Name</label>
@@ -912,7 +862,7 @@
      FEE AMOUNT & SHEETS CONFIG
   ============================================================ */
   const FEE_AMOUNT = "PKR ____";
-  const SHEET_URL = "https://script.google.com/macros/s/AKfycbx7CGED2BMuiJwQRUD4jNnhVxtCjDYILp7WewzaeyrASk7wbuDJ70BHlOh5zqpAG-ikig/exec";
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbyeRc3ZKBIAsVGGOQ9uil4XEARuijEGmiZy-pz5Ungnew_zpZaJR8x-e20Xl_UzmIK6/exec";
 
   const REG_OPEN  = new Date("2026-06-09T19:00:00Z");
   const REG_CLOSE = new Date("2026-06-10T19:00:00Z");
@@ -926,7 +876,6 @@
       showSection("closed-section");
     } else {
       showSection("form-section");
-      startCountdown();
       formatCNIC();
     }
   }
@@ -937,17 +886,6 @@
     });
   }
 
-  function startCountdown() {
-    function tick() {
-      const diff = REG_CLOSE - new Date();
-      if (diff <= 0) { showSection("closed-section"); return; }
-      const h = String(Math.floor(diff / 3600000)).padStart(2,"0");
-      const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2,"0");
-      const s = String(Math.floor((diff % 60000) / 1000)).padStart(2,"0");
-      document.getElementById("countdown").textContent = h+":"+m+":"+s;
-    }
-    tick(); setInterval(tick, 1000);
-  }
 
   function startNotyetCountdown() {
     function tick() {
